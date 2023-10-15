@@ -98,7 +98,8 @@
 
 import 'package:flutter/material.dart';
 import "package:kosmos/services/apod.dart";
-import 'package:kosmos/widgets/detailed_content.dart';
+// import 'package:kosmos/widgets/detailed_content.dart';
+import 'package:kosmos/widgets/details.dart';
 
 class MainCard extends StatefulWidget {
   const MainCard({super.key});
@@ -133,7 +134,7 @@ class _MainCardState extends State<MainCard> {
    void navigateToDetailedContent() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => DetailedContent(
+        builder: (context) => Details(
           title: data['title'] ?? '',
           description: data['explanation'] ?? '',
           imageUrl: data['url'] ?? '',

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kosmos/widgets/date_selector.dart';
 import 'package:kosmos/widgets/main_card.dart';
 import 'package:kosmos/widgets/nav_card.dart';
+import 'package:kosmos/widgets/detailed_content.dart';
+import 'package:kosmos/services/apod.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,6 +13,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  Future<Map<String, dynamic>> fetchData(String date) async {
+    final nasaApi = NasaApi("YOUR_API_KEY"); // Replace with your actual API key
+    final data = await nasaApi.fetchAPOD(date);
+    return data;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +46,7 @@ class _HomeState extends State<Home> {
         axisDirection: AxisDirection.down,
         viewportBuilder: (context, position) {
           return ListView(
-            children: const [
+            children: [
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: MainCard(),
@@ -49,7 +57,18 @@ class _HomeState extends State<Home> {
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
-                child: DateSelector(),
+                child: DateSelector(
+                  onDateSelected: (selectedDate) async {
+                    // final data = await fetchData(selectedDate);
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => DetailedContent(
+                          selectedDate: selectedDate,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           );

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 
 class DateSelector extends StatefulWidget {
-  const DateSelector({super.key});
+ final Function(String) onDateSelected;
+
+  const DateSelector({Key? key, required this.onDateSelected}) : super(key: key);
 
   @override
   State<DateSelector> createState() => _DateSelectorState();
@@ -11,19 +13,20 @@ class DateSelector extends StatefulWidget {
 class _DateSelectorState extends State<DateSelector> {
   String? selectedDate;
    Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != DateTime.now()) {
-      setState(() {
-        selectedDate = "${picked.year}, ${picked.month}, ${picked.day}";
-        print(selectedDate);
-      });
-    }
+  final DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2101),
+  );
+  if (picked != null && picked != DateTime.now()) {
+    final selectedDate = "${picked.year}-${picked.month}-${picked.day}";
+    widget.onDateSelected(selectedDate); // Pass the selected date to the parent widget
+    setState(() {
+      this.selectedDate = selectedDate;
+    });
   }
+}
 
   @override
   Widget build(BuildContext context) {
