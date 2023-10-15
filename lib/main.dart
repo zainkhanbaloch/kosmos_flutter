@@ -3,16 +3,16 @@ import 'package:kosmos/routes/home.dart';
 import 'package:device_preview/device_preview.dart';
 
 
-void main(){
-  runApp(DevicePreview(
-    enabled: true,
-    builder: (context) => const App(), // Wrap your app
-  ),);
-}
-
 // void main(){
-//   runApp(const App());
+//   runApp(DevicePreview(
+//     enabled: true,
+//     builder: (context) => const App(), // Wrap your app
+//   ),);
 // }
+
+void main(){
+  runApp(const App());
+}
 
 class App extends StatefulWidget {
   const App({super.key});
