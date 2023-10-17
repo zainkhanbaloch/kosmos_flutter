@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kosmos/widgets/date_selector.dart';
-import 'package:kosmos/widgets/main_card.dart';
-import 'package:kosmos/widgets/nav_card.dart';
-import 'package:kosmos/widgets/detailed_content.dart';
+import 'package:kosmos/routes/about.dart';
+import 'package:kosmos/routes/blog.dart';
+import 'package:kosmos/routes/front.dart';
+import 'package:kosmos/routes/mars.dart';
+import 'package:kosmos/routes/news.dart';
+
 import 'package:kosmos/services/apod.dart';
 
 class Home extends StatefulWidget {
@@ -17,6 +19,22 @@ class _HomeState extends State<Home> {
     final nasaApi = NasaApi("YOUR_API_KEY"); // Replace with your actual API key
     final data = await nasaApi.fetchAPOD(date);
     return data;
+  }
+
+  int _selectedIndex = 0;
+
+  static List<Widget> _widgetOptions = <Widget>[
+    const Front(),
+    const Mars(),
+    News(),
+    const Blog(),
+    About()
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
@@ -42,37 +60,48 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: Scrollable(
-        axisDirection: AxisDirection.down,
-        viewportBuilder: (context, position) {
-          return ListView(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: MainCard(),
+      body: _widgetOptions.elementAt(_selectedIndex),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: Color.fromARGB(255, 0, 132, 255),
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.business,
+              color: Color.fromARGB(255, 0, 132, 255),
+            ),
+            label: 'Mars',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.school,
+              color: Color.fromARGB(255, 0, 132, 255),
+            ),
+            label: 'News',
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.alarm,
+                color: Color.fromARGB(255, 0, 132, 255),
               ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: NavCard(),
+              label: "Blog"),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.developer_board,
+                color: Color.fromARGB(255, 0, 132, 255),
               ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: DateSelector(
-                  onDateSelected: (selectedDate) async {
-                    // final data = await fetchData(selectedDate);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => DetailedContent(
-                          selectedDate: selectedDate,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
-        },
+              label: "About"),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        selectedItemColor: Colors.blue, // Color for selected item
+        unselectedItemColor: Colors.grey, // Color for unselected items
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }
