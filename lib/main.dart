@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kosmos/routes/home.dart';
 import 'package:device_preview/device_preview.dart';
-
+import 'package:kosmos/routes/about.dart';
+import 'package:kosmos/routes/blog.dart';
+import 'package:kosmos/routes/front.dart';
+import 'package:kosmos/routes/mars.dart';
+import 'package:kosmos/routes/news.dart';
 
 // void main(){
 //   runApp(DevicePreview(
@@ -24,12 +28,19 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       // useInheritedMediaQuery: true,
       // locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       home: Home(),
+      initialRoute: '/',
+      routes: {
+        // '/': (context) => Home(),
+        '/mars': (context) => Mars(),
+        '/news': (context) => News(),
+        '/blog': (context) => Blog(),
+      },
     );
   }
 }

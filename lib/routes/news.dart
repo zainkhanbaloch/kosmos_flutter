@@ -20,7 +20,7 @@ class _News extends State<News> {
   Future<void> fetchSpaceflightNews() async {
     final response = await http.get(
       Uri.parse(
-          'https://api.spaceflightnewsapi.net/v4/articles?_limit=10'), // Adjust the URL and parameters as needed
+          'https://api.spaceflightnewsapi.net/v3/articles?_limit=10'),
     );
 
     if (response.statusCode == 200) {
@@ -29,7 +29,6 @@ class _News extends State<News> {
         articles = data.cast<Map<String, dynamic>>();
       });
     } else {
-      // Handle the error, e.g., display an error message
       print('Failed to fetch spaceflight news: ${response.statusCode}');
     }
   }
@@ -37,9 +36,15 @@ class _News extends State<News> {
   _launchURL(String url) async {
     final encodedURL = Uri.parse(url);
     print(url);
-    if (!await launchUrl(encodedURL)) {
-      print("Could not open url");
-      throw Exception('Could not launch $encodedURL');
+    try {
+      if (!await canLaunch(encodedURL.toString())) {
+        print("Could not open url");
+        throw Exception('Could not launch $encodedURL');
+      } else {
+        await launch(encodedURL.toString());
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -53,19 +58,35 @@ class _News extends State<News> {
           return Card(
             elevation: 4,
             margin: EdgeInsets.all(8),
-            child: ListTile(
-              title: Text(article['title']),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(article['summary'],
-                      maxLines: 3, overflow: TextOverflow.ellipsis),
-                  Text('News Site: ${article['newsSite']}'),
-                ],
-              ),
-              onTap: () {
-                _launchURL("www.google.com");
-              },
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.network(
+                      article['imageUrl'] ?? '',
+                      width: 350,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  title: Text(article['title']),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(article['summary'],
+                          maxLines: 3, overflow: TextOverflow.ellipsis),
+                      Text('News Site: ${article['newsSite']}'),
+                    ],
+                  ),
+                  onTap: () {
+                    _launchURL(article['url']);
+                  },
+                ),
+              ],
             ),
           );
         },

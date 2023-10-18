@@ -13,55 +13,76 @@ class NavCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Card(
-              color: Colors.grey[400],
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(children: [
-                  Image.asset(
-                    "assets/images/appicon.png",
-                    width: 40,
-                    height: 40,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/mars'); // Navigate to the Mars screen
+              },
+              child: Card(
+                color: Colors.grey[400],
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        "assets/images/appicon.png",
+                        width: 40,
+                        height: 40,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      const Text("Mars"),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const Text("Mars"),
-                ]),
+                ),
               ),
             ),
-            Card(
-              color: Colors.grey[400],
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(children: [
-                  Image.asset(
-                    "assets/images/appicon.png",
-                    width: 40,
-                    height: 40,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/news'); // Navigate to the News screen
+              },
+              child: Card(
+                color: Colors.grey[400],
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        "assets/images/appicon.png",
+                        width: 40,
+                        height: 40,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      const Text("News"),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const Text("News"),
-                ]),
+                ),
               ),
             ),
-            Card(
-              color: Color.fromARGB(255, 199, 199, 199),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(children: [
-                  Image.asset(
-                    "assets/images/appicon.png",
-                    width: 40,
-                    height: 40,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/blog'); // Navigate to the Blog screen
+              },
+              child: Card(
+                color: Color.fromARGB(255, 199, 199, 199),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        "assets/images/appicon.png",
+                        width: 40,
+                        height: 40,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      const Text("Blog"),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const Text("Blog"),
-                ]),
+                ),
               ),
             ),
           ],

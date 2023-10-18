@@ -1,14 +1,42 @@
 import 'package:flutter/material.dart';
-class Mars extends StatefulWidget {
-  const Mars({super.key});
+import 'package:kosmos/routes/roverimagescreen.dart';
 
-  @override
-  State<Mars> createState() => _MarsState();
-}
-
-class _MarsState extends State<Mars> {
+class Mars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to the images screen for Curiosity rover.
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RoverImagesScreen(roverName: 'Curiosity'),
+                  ),
+                );
+              },
+              child: Text('NASA Curiosity Rover'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to the images screen for Perseverance rover.
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RoverImagesScreen(roverName: 'Perseverance'),
+                  ),
+                );
+              },
+              child: Text('NASA Perseverance Rover'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

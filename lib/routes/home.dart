@@ -16,7 +16,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Future<Map<String, dynamic>> fetchData(String date) async {
-    final nasaApi = NasaApi("YOUR_API_KEY"); // Replace with your actual API key
+    final nasaApi = NasaApi(""); // Replace with your actual API key
     final data = await nasaApi.fetchAPOD(date);
     return data;
   }
@@ -25,9 +25,9 @@ class _HomeState extends State<Home> {
 
   static List<Widget> _widgetOptions = <Widget>[
     const Front(),
-    const Mars(),
+    Mars(),
     News(),
-    const Blog(),
+    Blog(),
     About()
   ];
 
@@ -53,6 +53,7 @@ class _HomeState extends State<Home> {
           color: Colors.black,
         ),
         leading: const Icon(Icons.menu),
+        
         actions: const [
           Padding(
             padding: EdgeInsets.all(10.0),
